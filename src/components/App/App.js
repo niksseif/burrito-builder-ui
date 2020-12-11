@@ -22,7 +22,7 @@ class App extends Component {
           <OrderForm />
         </header>
 
-        <Orders orders={this.state.orders}/>
+        <Orders/>
       </main>
     );
   }
