@@ -7,6 +7,7 @@ export class OrderForm extends Component {
   state = {
     ingrediants: [],
     name: "",
+    tripletIngrediant: [],
     possibleIngredients: [
       "beans",
       "steak",
@@ -28,6 +29,7 @@ export class OrderForm extends Component {
     this.setState({
       ingrediants: [...this.state.ingrediants, ingrediant],
     });
+    this.handleTriplet();
   };
   // handle name change in the form
   handleAddName = (e) => {
@@ -49,10 +51,33 @@ export class OrderForm extends Component {
     this.handleClear();
   };
 
+  handleTriplet = () => {
+    let re = this.state.ingrediants.reduce(
+      (x, y) => (x.includes(y) ? x : [...x, y]),
+      []
+    );
+    this.setState({ tripletIngrediant: re });
+  };
+
+  handleTextDuplicate = (arr) => {
+    return arr.join(",");
+  };
+
   render() {
     return (
       <form className="container-form">
         <h3>Order Menu</h3>
+        {this.state.tripletIngrediant.length > 0 && (
+          <>
+          <span>
+            {" "}
+            You have added{" "}
+            {(this.state.tripletIngrediant) && this.handleTextDuplicate(this.state.tripletIngrediant)} more than
+            2 times{" "}.
+          </span>
+          <span>We know you love {this.handleTextDuplicate(this.state.tripletIngrediant)}!</span>
+          </>
+        )}
         <input
           className="name-input"
           type="text"
