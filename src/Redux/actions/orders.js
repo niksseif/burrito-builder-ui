@@ -25,11 +25,11 @@ export const setOrders = () => {
 };
 
 // add a new order
-export const addOrder = (name, ingreddiants) => {
+export const addOrder = (name, ingreddiants, total) => {
   return async (dispatch) => {
     try {
       dispatch({ type: ADD_ORDERS_PENDING });
-      const addO = await postOrder(name, ingreddiants);
+      const addO = await postOrder(name, ingreddiants, total);
       dispatch({ type: ADD_ORDERS_SUCCESS, payload: addO });
     } catch (err) {
       dispatch({ type: ADD_ORDERS_FAILED, payload: err });

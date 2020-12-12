@@ -6,8 +6,8 @@ import { addOrder } from "../../Redux/actions/orders";
 export class OrderForm extends Component {
   state = {
     ingrediants: [],
-    name: "",
     tripletIngrediant: [],
+    name: "",
     possibleIngredients: [
       "beans",
       "steak",
@@ -22,25 +22,29 @@ export class OrderForm extends Component {
       "cilantro",
       "sour cream",
     ],
+    cost: 2,
+    total: 0,
   };
-  // adding the ingrediants to the state
+
   handleIngredientChange = (ingrediant, e) => {
     e.preventDefault();
+
     this.setState({
       ingrediants: [...this.state.ingrediants, ingrediant],
+      total: this.state.total + this.state.cost,
     });
     this.handleTriplet();
   };
-  // handle name change in the form
+
   handleAddName = (e) => {
     e.preventDefault();
     this.setState({ name: e.target.value });
   };
-  //clearing state after submition
+
   handleClear = () => {
     this.setState({ name: "", ingrediants: [], total: 0 });
   };
-  // handle submit to send the new order to the server
+
   handleSubmit = async (e) => {
     e.preventDefault();
     await this.props.addOrder(
@@ -50,7 +54,6 @@ export class OrderForm extends Component {
     );
     this.handleClear();
   };
-
   handleTriplet = () => {
     let re = this.state.ingrediants.reduce(
       (x, y) => (x.includes(y) ? x : [...x, y]),
@@ -69,13 +72,14 @@ export class OrderForm extends Component {
         <h3>Order Menu</h3>
         {this.state.tripletIngrediant.length > 0 && (
           <>
-          <span>
-            {" "}
-            You have added{" "}
-            {(this.state.tripletIngrediant) && this.handleTextDuplicate(this.state.tripletIngrediant)} more than
-            2 times{" "}.
-          </span>
-          <span>We know you love {this.handleTextDuplicate(this.state.tripletIngrediant)}!</span>
+            <span>
+              {" "}
+              You have added{" "}
+              {this.state.tripletIngrediant &&
+                this.handleTextDuplicate(this.state.tripletIngrediant)}{" "}
+              more than 2 times .
+            </span>
+            <span>We know you love {this.state.tripletIngrediant}!</span>
           </>
         )}
         <input
@@ -115,10 +119,12 @@ export class OrderForm extends Component {
         >
           Submit Order
         </button>
+
+        <p>Total cost: ${this.state.total} </p>
         {
           // rendering added ingrediants for users to be able to see their added ingrediants
           this.state.ingrediants.map((ing, id) => (
-            <React.Fragment key ={id}>
+            <React.Fragment key={id}>
               <ul>{ing}</ul>
             </React.Fragment>
           ))
@@ -128,8 +134,9 @@ export class OrderForm extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state, props) => ({
   data: state,
+  addSuccess: props,
 });
 
 const mapDispatchToProps = (dispatch) => ({

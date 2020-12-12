@@ -32,8 +32,10 @@ class Orders extends Component {
                     return <li key={idx}>{ingredient}</li>;
                   })}
                 </ul>
+                
               </>
             }
+            <p>total : ${order.total}</p>
           </div>
         );
       });

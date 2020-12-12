@@ -89,7 +89,7 @@ it("renders with redux-submit button", () => {
 });
 it("renders with redux-possible Ingredients texts", () => {
   const { getByTestId, getByText } = renderWithRedux(<OrderForm />);
-  fireEvent.click(getByTestId("ingrediant0"));
+  fireEvent.click(getByText("beans $2"));
   expect(getByTestId("ingrediant0")).toHaveTextContent("beans");
   expect(getByTestId("ingrediant1")).toHaveTextContent("steak");
 });
