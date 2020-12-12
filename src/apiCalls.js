@@ -3,7 +3,6 @@ export const getOrders = async () => {
   let response = await fetch(url);
   return response.json();
 };
-
 // post request to the server
 export const postOrder = async (name, ingredients) => {
   try {
