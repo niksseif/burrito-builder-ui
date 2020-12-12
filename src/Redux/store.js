@@ -11,5 +11,5 @@ const enhancers =
     : composeEnhancers(applyMiddleware(thunkMiddleware));
 
 export default function setupStore(initialState) {
-  return createStore(combineReducers, initialState, enhancers)
+  return createStore(combineReducers, initialState, enhancers);
 }

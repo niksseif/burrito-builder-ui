@@ -2,11 +2,10 @@ import React, { Component } from "react";
 import "./Orders.css";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setOrders, } from "../../Redux/actions/orders";
-
+import { setOrders } from "../../Redux/actions/orders";
 
 class Orders extends Component {
-   state = {
+  state = {
     orders: [],
   };
   componentDidMount() {
@@ -24,17 +23,15 @@ class Orders extends Component {
       orderEls = orders.map((order) => {
         return (
           <div className="order" key={order.id}>
-            
             <h4>{order.name}</h4>
             {
               <>
-              <h4>ingredients :</h4>
-              <ul className="ingredient-list">
-                {order.ingredients.map((ingredient, idx) => {
-                  return <li key={idx}>{ingredient}</li>;
-                })}
-                
-              </ul>
+                <h4>ingredients :</h4>
+                <ul className="ingredient-list">
+                  {order.ingredients.map((ingredient, idx) => {
+                    return <li key={idx}>{ingredient}</li>;
+                  })}
+                </ul>
               </>
             }
           </div>
@@ -44,7 +41,9 @@ class Orders extends Component {
       orderEls = [];
     }
     return (
-      <section className="order-container">{orderEls.length ? orderEls : <p>No orders yet!</p>}</section>
+      <section className="order-container">
+        {orderEls.length ? orderEls : <p>No orders yet!</p>}
+      </section>
     );
   }
 }
@@ -54,7 +53,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setOrders: bindActionCreators(setOrders, dispatch)
+  setOrders: bindActionCreators(setOrders, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Orders);

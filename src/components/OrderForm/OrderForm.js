@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-
-
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { addOrder } from "../../Redux/actions/orders";
 
 class OrderForm extends Component {
   state = {
@@ -21,26 +22,39 @@ class OrderForm extends Component {
       "sour cream",
     ],
   };
-  // adding the ingrediants to the state 
+  // adding the ingrediants to the state
   handleIngredientChange = (ingrediant, e) => {
     e.preventDefault();
     this.setState({
-      ingrediants: [...this.state.ingrediants, ingrediant], 
+      ingrediants: [...this.state.ingrediants, ingrediant],
     });
-  
   };
-// handle name change in the form 
+  // handle name change in the form
   handleAddName = (e) => {
     e.preventDefault();
     this.setState({ name: e.target.value });
   };
- 
+  //clearing state after submition
+  handleClear = () => {
+    this.setState({ name: "", ingrediants: [], total: 0 });
+  };
+  // handle submit to send the new order to the server
+  handleSubmit = async (e) => {
+    e.preventDefault();
+    await this.props.addOrder(
+      this.state.name,
+      this.state.ingrediants,
+      this.state.total
+    );
+    this.handleClear();
+  };
+
   render() {
     return (
       <form className="container-form">
         <h3>Order Menu</h3>
-        <input 
-          className ="name-input"
+        <input
+          className="name-input"
           type="text"
           placeholder="Name"
           name="name"
@@ -59,12 +73,11 @@ class OrderForm extends Component {
                 {ingrediant} ${this.state.cost}
               </button>
             </React.Fragment>
-        )}
-        )
-        }
+          );
+        })}
 
         <button
-        className='submit'
+          className="submit"
           onClick={(e) => this.handleSubmit(e)}
           disabled={
             this.state.name === "" ||
@@ -77,16 +90,25 @@ class OrderForm extends Component {
         >
           Submit Order
         </button>
-        {// rendering added ingrediants for users to be able to see their added ingrediants
-          this.state.ingrediants.map(ing =>(<><ul>{ing}</ul></>))
+        {
+          // rendering added ingrediants for users to be able to see their added ingrediants
+          this.state.ingrediants.map((ing) => (
+            <>
+              <ul>{ing}</ul>
+            </>
+          ))
         }
       </form>
     );
   }
 }
 
+const mapStateToProps = (state) => ({
+  data: state,
+});
 
+const mapDispatchToProps = (dispatch) => ({
+  addOrder: bindActionCreators(addOrder, dispatch),
+});
 
-
-
-export default OrderForm;
+export default connect(mapStateToProps, mapDispatchToProps)(OrderForm);
