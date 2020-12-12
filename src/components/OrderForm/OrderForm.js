@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { addOrder } from "../../Redux/actions/orders";
-
+import './OrderForm.css'
 export class OrderForm extends Component {
   state = {
     ingrediants: [],
@@ -28,7 +28,7 @@ export class OrderForm extends Component {
 
   handleIngredientChange = (ingrediant, e) => {
     e.preventDefault();
-
+    console.log('hello')
     this.setState({
       ingrediants: [...this.state.ingrediants, ingrediant],
       total: this.state.total + this.state.cost,
@@ -47,6 +47,7 @@ export class OrderForm extends Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
+    console.log('hello')
     await this.props.addOrder(
       this.state.name,
       this.state.ingrediants,
@@ -124,9 +125,10 @@ export class OrderForm extends Component {
         {
           // rendering added ingrediants for users to be able to see their added ingrediants
           this.state.ingrediants.map((ing, id) => (
-            <React.Fragment key={id}>
+            <div key={id} className='newOrderList'>
+              
               <ul>{ing}</ul>
-            </React.Fragment>
+            </div>
           ))
         }
       </form>
