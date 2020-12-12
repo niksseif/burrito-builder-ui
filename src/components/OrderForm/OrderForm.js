@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { addOrder } from "../../Redux/actions/orders";
 
-class OrderForm extends Component {
+export class OrderForm extends Component {
   state = {
     ingrediants: [],
     name: "",
@@ -92,10 +92,10 @@ class OrderForm extends Component {
         </button>
         {
           // rendering added ingrediants for users to be able to see their added ingrediants
-          this.state.ingrediants.map((ing) => (
-            <>
+          this.state.ingrediants.map((ing, id) => (
+            <React.Fragment key ={id}>
               <ul>{ing}</ul>
-            </>
+            </React.Fragment>
           ))
         }
       </form>
